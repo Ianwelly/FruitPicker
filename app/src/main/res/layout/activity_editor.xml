@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="wizard.ian.android.fruitpicker.EditorActivity">
+
+    <EditText
+        android:id="@+id/edit_text_fruit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Fruit"
+        android:inputType="textPersonName"
+        android:layout_marginTop="@dimen/edit_text_margin_top"/>
+
+
+    <EditText
+        android:id="@+id/edit_text_quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Quantity"
+        android:inputType="textPersonName"
+       android:layout_marginTop="@dimen/edit_text_margin_top"/>
+
+    <EditText
+        android:id="@+id/edit_text_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="textPersonName"
+        android:layout_marginTop="@dimen/edit_text_margin_top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/buttons_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_increase" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/quantity"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_decrease" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/delete_button_margin"
+        android:text="@string/btn_delete" />
+
+
+</LinearLayout>

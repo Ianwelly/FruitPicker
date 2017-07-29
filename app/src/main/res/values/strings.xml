@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">FruitPicker</string>
+    <string name="quantity">Quantity</string>
+    <string name="btn_increase">Increase</string>
+    <string name="btn_decrease">Decrease</string>
+    <string name="btn_delete">Delete Product</string>
+
+    <!-- Label for overflow menu option that inserts fake fruit data into the app -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all fruit data in the app  -->
+    <string name="action_delete_all_entries">Delete All Pets</string>
+
+    <!-- Label for editor menu option to save fruit and leave editor  -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current fruit -->
+    <string name="action_delete">Delete</string>
+
+</resources>
