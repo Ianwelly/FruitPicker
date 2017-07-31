@@ -11,29 +11,29 @@
         android:id="@+id/edit_text_fruit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_text_margin_top"
         android:ems="10"
         android:hint="Enter Fruit"
-        android:inputType="textPersonName"
-        android:layout_marginTop="@dimen/edit_text_margin_top"/>
+        android:inputType="textPersonName" />
 
 
     <EditText
         android:id="@+id/edit_text_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_text_margin_top"
         android:ems="10"
         android:hint="Quantity"
-        android:inputType="textPersonName"
-       android:layout_marginTop="@dimen/edit_text_margin_top"/>
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/edit_text_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_text_margin_top"
         android:ems="10"
         android:hint="Price"
-        android:inputType="textPersonName"
-        android:layout_marginTop="@dimen/edit_text_margin_top"/>
+        android:inputType="textPersonName" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_increase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_decrease"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -74,5 +74,37 @@
         android:layout_marginTop="@dimen/delete_button_margin"
         android:text="@string/btn_delete" />
 
+
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/buttons_margin"
+        android:text="@string/btn_order" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_load_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/buttons_margin"
+            android:layout_weight="1"
+            android:text="@string/btn_load_image"
+            android:onClick="btnClick"/>
+
+        <ImageView
+            android:id="@+id/image_view_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/image_view_thumbnail"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </LinearLayout>
