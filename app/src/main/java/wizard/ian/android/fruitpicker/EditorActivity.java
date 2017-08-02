@@ -172,6 +172,7 @@ public class EditorActivity extends AppCompatActivity {
         values.put(FruitEntry.COLUMN_FRUIT, nameString);
         values.put(FruitEntry.COLUMN_QUANTITY, quantity);
         values.put(FruitEntry.COLUMN_PRICE, price);
+        values.put(FruitEntry.COLUMN_IMAGE, mImageUri.toString() );
         //Need to add image here
 
         //Insert the ContentValues object into the db.

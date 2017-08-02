@@ -38,7 +38,7 @@ public class FruitDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_FRUIT_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + _ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FRUIT
                  + " TEXT NOT NULL, " + COLUMN_QUANTITY + " TEXT NOT NULL, " + COLUMN_PRICE +
-                 " TEXT NOT NULL " + COLUMN_IMAGE + "BLOB);";
+                 " TEXT NOT NULL, " + COLUMN_IMAGE + " BLOB);";
         // + COLUMN BITMAP NEED TO ENTER THIS LATER
 
         //The we use the execute SQL method to execute the build. We execute it on our instance of

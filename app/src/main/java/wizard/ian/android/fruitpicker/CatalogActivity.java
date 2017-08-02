@@ -12,15 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import wizard.ian.android.fruitpicker.Data.FruitContract;
 import wizard.ian.android.fruitpicker.Data.FruitContract.FruitEntry;
 import wizard.ian.android.fruitpicker.Data.FruitDbHelper;
 
 public class CatalogActivity extends AppCompatActivity {
 
     private FruitDbHelper mDbHelper;
-
-
 
 
     @Override
@@ -41,10 +38,9 @@ public class CatalogActivity extends AppCompatActivity {
         mDbHelper = new FruitDbHelper(this);
 
 
+    }
 
-        }
-
-        //When the app returns to this activity from the editor activity the onCreate isn't called
+    //When the app returns to this activity from the editor activity the onCreate isn't called
     //so the old database information would still be displayed. The onStart() method refreshes what
     //ever is needed, in this case the database.
 
@@ -66,14 +62,63 @@ public class CatalogActivity extends AppCompatActivity {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + FruitContract.FruitEntry.TABLE_NAME, null);
+        //Create the Strings needed for entry into the Cursor object
+
+        String[] projection = {
+                FruitEntry._ID,
+                FruitEntry.COLUMN_FRUIT,
+                FruitEntry.COLUMN_QUANTITY,
+                FruitEntry.COLUMN_PRICE
+        };
+
+//Inflate the Cursor object
+        Cursor cursor = db.query(
+                FruitEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        TextView displayView = (TextView) findViewById(R.id.text_view_fruit);
+
         try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.text_view_fruit);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+            // Create a header in the Text View that looks like this:
+            //
+            // The pets table contains <number of rows in Cursor> pets.
+            // _id - name - breed - gender - weight
+            //
+            // In the while loop below, iterate through the rows of the cursor and display
+            // the information from each column in this order.
+            displayView.setText("The pets table contains " + cursor.getCount() + " pets.\n\n");
+            displayView.append(FruitEntry._ID + " - " +
+                    FruitEntry.COLUMN_FRUIT + " - " +
+                    FruitEntry.COLUMN_QUANTITY + " - " +
+                    FruitEntry.COLUMN_PRICE + "\n");
+
+
+            // Figure out the index of each column
+            int idColumnIndex = cursor.getColumnIndex(FruitEntry._ID);
+            int fruitColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_FRUIT);
+            int quantityColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_QUANTITY);
+            int priceColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_PRICE);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                int currentID = cursor.getInt(idColumnIndex);
+                String currentName = cursor.getString(fruitColumnIndex);
+                int currentQuantity = cursor.getInt(quantityColumnIndex);
+                int currentPrice = cursor.getInt(priceColumnIndex);
+                // Display the values from each column of the current row in the cursor in the TextView
+                displayView.append(("\n" + currentID + " - " +
+                        currentName + " - " +
+                        currentQuantity + " - " +
+                        currentPrice));
+            }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
@@ -83,9 +128,9 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void insertFruit() {
 
-       SQLiteDatabase db =  mDbHelper.getWritableDatabase();
-        ContentValues values = new  ContentValues();
-        values.put(FruitEntry.COLUMN_FRUIT, "Apple" );
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(FruitEntry.COLUMN_FRUIT, "Apple");
         values.put(FruitEntry.COLUMN_QUANTITY, "200");
         values.put(FruitEntry.COLUMN_PRICE, 100);
 
@@ -94,16 +139,16 @@ public class CatalogActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         //Inflates an option menu
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         //User clicked on a menu option
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             //Respond to a click on 'Insert dummy data'
             case R.id.action_insert_dummy_data:
                 //do nothing for now
