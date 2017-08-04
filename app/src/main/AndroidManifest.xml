@@ -24,7 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditorActivity"> </activity>
+        <activity android:name=".EditorActivity"> </activity><provider
+        android:name=".Data.FruitProvider"
+        android:authorities="wizard.ian.android.fruitpicker"
+        android:exported="false" />
     </application>
 
 </manifest>

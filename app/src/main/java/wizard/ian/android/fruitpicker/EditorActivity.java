@@ -2,7 +2,6 @@ package wizard.ian.android.fruitpicker;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import wizard.ian.android.fruitpicker.Data.FruitContract.FruitEntry;
-import wizard.ian.android.fruitpicker.Data.FruitDbHelper;
 
 import static java.lang.Integer.parseInt;
 
@@ -152,21 +150,21 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
-//Inserts the details entered by the user
+    //Inserts the details entered by the user
     public void insertFruit() {
         //find the input fields, get the text that was entered and then convert into a string
         //and trim any whitespace. Then assign it to a String.
-       String nameString = mFruitEditText.getText().toString().trim();
+        String nameString = mFruitEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
         int quantity = Integer.parseInt(quantityString);
         String priceString = mPriceEditText.getText().toString();
         int price = Integer.parseInt(priceString);
         //Need to add image here
 
-        FruitDbHelper mDbHelper = new FruitDbHelper(this);
-
-        //Get db into write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+//        FruitDbHelper mDbHelper = new FruitDbHelper(this);
+//
+//        //Get db into write mode
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FruitEntry.COLUMN_FRUIT, nameString);
@@ -175,14 +173,27 @@ public class EditorActivity extends AppCompatActivity {
         values.put(FruitEntry.COLUMN_IMAGE, mImageUri.toString() );
         //Need to add image here
 
+        Uri newUri = getContentResolver().insert(FruitEntry.CONTENT_URI, values);
+
+        // Show a toast message depending on whether or not the insertion was successful
+        if (newUri == null) {
+            // If the new content URI is null, then there was an error with insertion.
+            Toast.makeText(this, getString(R.string.editor_insert_pet_failed),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Otherwise, the insertion was successful and we can display a toast.
+            Toast.makeText(this, getString(R.string.editor_insert_pet_successful),
+                    Toast.LENGTH_SHORT).show();
+        }
+
         //Insert the ContentValues object into the db.
         // Get the returned id value. If it is -1 we know something went wrong
-        long newRowId = db.insert(FruitEntry.TABLE_NAME,null,values);
-        if (newRowId == -1){
-            Toast.makeText(EditorActivity.this, "Oops! Something went wrong!",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Fruit was saved!",Toast.LENGTH_SHORT).show();
-        }
+//        long newRowId = db.insert(FruitEntry.TABLE_NAME,null,values);
+//        if (newRowId == -1){
+//            Toast.makeText(EditorActivity.this, "Oops! Something went wrong!",Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Fruit was saved!",Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
@@ -217,7 +228,6 @@ public class EditorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
 
 
 

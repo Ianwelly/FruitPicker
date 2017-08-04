@@ -3,7 +3,7 @@ package wizard.ian.android.fruitpicker;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import wizard.ian.android.fruitpicker.Data.FruitContract.FruitEntry;
-import wizard.ian.android.fruitpicker.Data.FruitDbHelper;
 
 public class CatalogActivity extends AppCompatActivity {
 
-    private FruitDbHelper mDbHelper;
+    //private FruitDbHelper mDbHelper;
 
 
     @Override
@@ -35,7 +34,7 @@ public class CatalogActivity extends AppCompatActivity {
             }
         });
 
-        mDbHelper = new FruitDbHelper(this);
+       // mDbHelper = new FruitDbHelper(this);
 
 
     }
@@ -57,10 +56,10 @@ public class CatalogActivity extends AppCompatActivity {
     private void displayDatabaseInfo() {
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
-        FruitDbHelper mDbHelper = new FruitDbHelper(this);
-
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+//       FruitDbHelper mDbHelper = new FruitDbHelper(this);
+////
+////        // Create and/or open a database to read from it
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         //Create the Strings needed for entry into the Cursor object
 
@@ -68,19 +67,28 @@ public class CatalogActivity extends AppCompatActivity {
                 FruitEntry._ID,
                 FruitEntry.COLUMN_FRUIT,
                 FruitEntry.COLUMN_QUANTITY,
-                FruitEntry.COLUMN_PRICE
+                FruitEntry.COLUMN_PRICE,
+                FruitEntry.COLUMN_IMAGE
         };
 
-//Inflate the Cursor object
-        Cursor cursor = db.query(
-                FruitEntry.TABLE_NAME,
+////Inflate the Cursor object
+//        Cursor cursor = db.query(
+//                FruitEntry.TABLE_NAME,
+//                projection,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null
+//        );
+
+        Cursor cursor = getContentResolver().query(
+                FruitEntry.CONTENT_URI,
                 projection,
                 null,
                 null,
-                null,
-                null,
-                null
-        );
+                null);
+
 
         TextView displayView = (TextView) findViewById(R.id.text_view_fruit);
 
@@ -96,7 +104,8 @@ public class CatalogActivity extends AppCompatActivity {
             displayView.append(FruitEntry._ID + " - " +
                     FruitEntry.COLUMN_FRUIT + " - " +
                     FruitEntry.COLUMN_QUANTITY + " - " +
-                    FruitEntry.COLUMN_PRICE + "\n");
+                    FruitEntry.COLUMN_PRICE + " - " +
+                    FruitEntry.COLUMN_IMAGE + "\n");
 
 
             // Figure out the index of each column
@@ -104,6 +113,7 @@ public class CatalogActivity extends AppCompatActivity {
             int fruitColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_FRUIT);
             int quantityColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_PRICE);
+            int imageColumnIndex = cursor.getColumnIndex(FruitEntry.COLUMN_IMAGE);
 
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
@@ -113,11 +123,13 @@ public class CatalogActivity extends AppCompatActivity {
                 String currentName = cursor.getString(fruitColumnIndex);
                 int currentQuantity = cursor.getInt(quantityColumnIndex);
                 int currentPrice = cursor.getInt(priceColumnIndex);
+                String currentImage = cursor.getString(imageColumnIndex);
                 // Display the values from each column of the current row in the cursor in the TextView
                 displayView.append(("\n" + currentID + " - " +
                         currentName + " - " +
                         currentQuantity + " - " +
-                        currentPrice));
+                        currentPrice + " - " +
+                        currentImage));
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
@@ -128,13 +140,15 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void insertFruit() {
 
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        //SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FruitEntry.COLUMN_FRUIT, "Apple");
         values.put(FruitEntry.COLUMN_QUANTITY, "200");
         values.put(FruitEntry.COLUMN_PRICE, 100);
 
-        db.insert(FruitEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(FruitEntry.CONTENT_URI, values);
+
+        //db.insert(FruitEntry.TABLE_NAME, null, values);
 
     }
 

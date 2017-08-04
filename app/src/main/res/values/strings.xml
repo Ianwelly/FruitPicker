@@ -18,5 +18,7 @@
     <string name="action_delete">Delete</string>
     <string name="btn_order">Order</string>
     <string name="btn_load_image">load image</string>
+    <string name="editor_insert_pet_failed">Pet insertion failed</string>
+    <string name="editor_insert_pet_successful">Pet inserted</string>
 
 </resources>
